@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Flights.Models.Domain.FlightData>
+@{
+
+}
+@Html.ActionLink("Export as csv","Export1")
+<p style="color:green">@ViewBag.Message23</p>
+<p style="color:red">@ViewBag.Message24</p>
+<h1>List of flight details </h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Flight Id</th>
+            <th scope="col">Depart Destination</th>
+            <th scope="col">Arrival Destination</th>
+            <th scope="col">Depart Time</th>
+            <th scope="col">Arrival Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model){
+            <tr>
+                <td>@Html.DisplayFor(modelItem=>f.flightid)</td>
+                <td>@Html.DisplayFor(modelItem=>f.departure_destination)</td>
+                <td>@Html.DisplayFor(modelItem=>f.departure_date)</td>
+                <td>@Html.DisplayFor(modelItem=>f.arrival_destination)</td>
+                <td>@Html.DisplayFor(modelItem=>f.arrival_date)</td>
+                <td>@Html.ActionLink("View","Viewflight",new{id=f.id})</td>
+               
+          
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,36 @@
+﻿@model Flights.Models.AddFlightModel
+@{
+}
+<form method="post" action="AddFlight">
+    
+    <div class="form-group">
+        <label for=""> Flightid</label>
+        <input type="text" class="form-control" asp-for="flightid"  aria-describedby="emailHelp" placeholder="Enter Flightid">
+        
+    </div>
+    <div class="form-group">
+        <label for="">Depature Destination</label>
+        <input type="text" class="form-control" asp-for="departure_destination" placeholder="Enter Depature destination">
+    </div>
+    <div class="form-group">
+        <label for="">Arrival Destination</label>
+        <input type="text" class="form-control" asp-for="arrival_destination" placeholder="Enter Arrival destination">
+    </div>
+    <div class="form-group">
+        <label for="">Departure Date</label>
+        <input type="datetime" class="form-control" asp-for="departure_date" placeholder="Enter departure date">
+    </div>
+    <div class="form-group">
+        <label for="">Arrival Date</label>
+        <input type="datetime" class="form-control" asp-for="arrival_date" placeholder="Enter Arrival date">
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Add flight</button>
+    
+    <p style="color:green">@ViewBag.Message1</p>
+    <p style="color:red">@ViewBag.Message2</p>
+    
+    
+ </form>
+

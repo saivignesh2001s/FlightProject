@@ -1,0 +1,40 @@
+﻿@model Flights.Models.UpdateEmployeeViewModel
+@{
+}
+<h1>Edit Employee</h1>
+<form method="post" action="Editflight">
+    <div class="form-group">
+    <label for=""> id</label>
+    <input type="text" class="form-control" asp-for="id" readonly>
+
+    </div>
+    
+    <div class="form-group">
+        <label for=""> Flightid</label>
+        <input type="text" class="form-control" asp-for="flightid"  >
+        
+    </div>
+    <div class="form-group">
+        <label for="">Depature Destination</label>
+        <input type="text" class="form-control" asp-for="departure_destination" >
+    </div>
+    <div class="form-group">
+        <label for="">Arrival Destination</label>
+        <input type="text" class="form-control" asp-for="arrival_destination" >
+    </div>
+    <div class="form-group">
+        <label for="">Departure Date</label>
+        <input type="datetime" class="form-control" asp-for="departure_date">
+    </div>
+    <div class="form-group">
+        <label for="">Arrival Date</label>
+        <input type="datetime" class="form-control" asp-for="arrival_date">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-danger" asp-action="Deleteflight" asp-controller="Flight">Delete</button>
+    <p style="color:red">@ViewBag.Message4</p>
+    <p style="color:red">@ViewBag.Message5</p>
+     <p style="color:red">@ViewBag.Message6</p>
+
+
+</form>

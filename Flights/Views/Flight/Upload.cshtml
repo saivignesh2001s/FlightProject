@@ -1,0 +1,14 @@
+﻿@model Flights.Models.Fileupload
+@{
+}
+<form action="Upload" method="post" >
+<div>
+    <label for="formFileLg" class="form-label">Large file input example</label>
+    <input class="form-control form-control-lg" id="formFileLg" asp-for="filename" type="file">
+</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  
+</form>
+<p style="color:red">@ViewBag.Message1</p>
+<p style="color:red">@ViewBag.Message2</p>
+
