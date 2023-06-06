@@ -1,5 +1,8 @@
 using Flights.Details;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Flights.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Flightdetailsdbcontext>(options=> 
            options.UseSqlServer(builder.Configuration
            .GetConnectionString("FlightDataConnectionString")));
+builder.Services.AddTransient<IMethods,crudmethods>();
+builder.Services.AddTransient<ICsvMethods, Csvmethods>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

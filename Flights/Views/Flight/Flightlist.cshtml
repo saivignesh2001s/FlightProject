@@ -2,11 +2,11 @@
 @{
 
 }
-@Html.ActionLink("Export as csv","Export1")
-<p style="color:green">@ViewBag.Message23</p>
-<p style="color:red">@ViewBag.Message24</p>
-<h1>List of flight details </h1>
 
+<h1>List of flight details </h1>
+<div style="float:right;">
+@Html.ActionLink("Export as csv","Export1")
+</div>
 <table class="table table-striped">
     <thead>
         <tr>

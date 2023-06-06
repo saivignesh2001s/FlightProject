@@ -12,124 +12,42 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Grpc.Core;
 using CsvHelper;
 using System.Globalization;
+using Flights.Repository;
 
 namespace Flights.Controllers
 {
-    public class FlightController : Controller
+    public class FlightController : Controller  //Controller for flights
     {
-        private readonly Flightdetailsdbcontext context;
-        public FlightController(Flightdetailsdbcontext dbcontext)
+        private readonly IMethods context1;
+        private readonly ICsvMethods context;
+        public FlightController(ICsvMethods context,IMethods context1) //Importing Two methods from Repository folder
         {
-            this.context = dbcontext;
+            this.context = context;
+            this.context1=context1;
         }
 
 
-        public IActionResult Upload() {
+        public IActionResult Upload() {   //Function for uploading csv file
 
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Upload(IFormCollection c){
             string k =c["filename"].ToString();
-             string[] p = k.Split('.');
-             bool k1 = false;
-             foreach(var p1 in p)
-             {
-                 if (p1 == "csv")
-                 {
-                     k1 = true;
-                     break;
-                 }
-             }
-            /*if (k1)
-             {
-                 String hd = "D:\\Downloads\\" + k;
-                 FileStream fs = new FileStream(hd,FileMode.Open,FileAccess.Read);
-                 StreamReader rs=new StreamReader(fs);
-                 try
-                 {
-                     while (!rs.EndOfStream)
-                     {
-                         string line = rs.ReadLine();
-                         string[] pk = line.Split(',');
-                         var flightdetail = new FlightData()
-                         {
-                             id=Guid.NewGuid(),
-                             flightid = pk[0],
-                             departure_destination = pk[1].ToString(),
-                             departure_date =Convert.ToDateTime(pk[3]),
-                             arrival_destination = pk[2].ToString(),
-                             arrival_date = Convert.ToDateTime(pk[4])
-                         };
+           
+           
 
-                         await context.FlightDatas.AddAsync(flightdetail);
-                         await context.SaveChangesAsync();
-
-
-
-                     }
-
-                     return RedirectToAction("Flightlist");
-                 }
-                 catch
-                 {
-                     ViewBag.Message10 = "Check datas and connections all again";
-                     return View();
-
-                 }
-                 finally
-                 {
-                     rs.Close();
-                     rs.Dispose();
-                     fs.Close();
-                     fs.DisposeAsync();
-
-             }*/
-
-            if (k1)
+            if (context.IsCsv(k))
             {
-                try
-                {
-                  /*  if (!Directory.Exists("~//Uploads"))
-                    {
-                        Directory.CreateDirectory("//Uploads");
-                    }*/
+               
+                  
                     string fname = @"D://Downloads//" + k;
-
-                    /*using (FileStream fileStream = System.IO.File.Create(fname))
-                    {
-                        k.CopyTo(fileStream);
-                        fileStream.Flush();
-                    }*/
-
-                    using (var reader = new StreamReader(fname))
-                    {
-                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                        {
-                            csv.Read();
-                            csv.ReadHeader();
-                            while (csv.Read())
-                            {
-                                var pk = csv.GetRecord<csvflight>();
-                                var flightdetail = new FlightData()
-                                {
-                                    id = Guid.NewGuid(),
-                                    flightid = pk.flightid.ToString(),
-                                    departure_destination = pk.departure_destination.ToString(),
-                                    departure_date = Convert.ToDateTime(pk.departure_date),
-                                    arrival_destination = pk.arrival_destination.ToString(),
-                                    arrival_date = Convert.ToDateTime(pk.arrival_date)
-                                };
-
-                                await context.FlightDatas.AddAsync(flightdetail);
-                                await context.SaveChangesAsync();
-                            }
-                        }
-
-                    }
+                    bool k1 = context.writecsvtosql(fname);
+                if (k1) {   
+                  
                     return RedirectToAction("Flightlist");
                 }
-                catch
+                else
                 {
                     ViewBag.Message1 = "Check Data,Sql connection and file name again";
                     return View();
@@ -147,13 +65,13 @@ namespace Flights.Controllers
         
         
         }
-        public async Task<IActionResult> Flightlist()
+        public async Task<IActionResult> Flightlist() //Function for listing flight details
         {
-            var Details = await context.FlightDatas.ToListAsync();
+            var Details = context1.GetAllmethod();
             return View(Details);
         }
 
-        public IActionResult AddFlight()
+        public IActionResult AddFlight()   //Function for adding flights
         {
 
             return View();
@@ -172,15 +90,14 @@ namespace Flights.Controllers
                 arrival_date = Convert.ToDateTime(c["arrival_date"]),
                 departure_date = Convert.ToDateTime(c["departure_date"])
             };
-
-            try
+            bool k1 = context1.Addmethod(fdata);
+            if(k1)
             {
-                await context.FlightDatas.AddAsync(fdata);
-                await context.SaveChangesAsync();
+            
                 ViewBag.Message1 = "Saved successfully";
                 return RedirectToAction("Flightlist");
             }
-            catch
+            else
             {
                 ViewBag.Message2 = "Check connections again";
                 return View(fdata);
@@ -190,9 +107,9 @@ namespace Flights.Controllers
 
 
         }
-        public async Task<IActionResult> Viewflight(Guid id)
+        public async Task<IActionResult> Viewflight(Guid id) //context for Editing flight details
         {
-            var p = await context.FlightDatas.FirstOrDefaultAsync(x => x.id == id);
+            var p = context1.Getmethod(id);
             if (p != null)
             {
                 var newmodel = new UpdateEmployeeViewModel()
@@ -212,84 +129,62 @@ namespace Flights.Controllers
         [HttpPost]
         public async Task<IActionResult> Viewflight(UpdateEmployeeViewModel p)
         {
-
-            FlightData k = await context.FlightDatas.FindAsync(p.id);
-            if (k != null)
+            if (p.departure_date < p.arrival_date)
             {
-                k.flightid = p.flightid;
-                k.arrival_date = Convert.ToDateTime(p.arrival_date);
-                k.arrival_destination = p.arrival_destination;
-                k.departure_destination = p.departure_destination;
-                k.departure_date = p.departure_date;
-                if (k.departure_date > k.arrival_date)
+                bool k1 = context1.Updatemethod(p);
+                if (k1)
                 {
-                    return View(p);
-                    ViewBag.Message4 = "Departure datetime must be less than the Arrival datetime";
+                    return RedirectToAction("Flightlist");
+                  
                 }
                 else
                 {
-                    try
-                    {
-
-                        await context.SaveChangesAsync();
-                        return RedirectToAction("Flightlist");
-                    }
-                    catch
-                    {
-                        ViewBag.Message5 = "Check Datas again";
-                        return View(k);
-                    }
+                    ViewBag.Message5 = "Check Datas again";
+                    return View(p);
                 }
             }
             else
             {
-                ViewBag.Message6 = "Check again";
-                return View(k);
+                ViewBag.Message4 = "Departure datetime must be less than the Arrival datetime";
+                return View(p);
             }
 
 
 
         }
         [HttpPost]
-        public async Task<IActionResult> Deleteflight(Guid id)
+        public async Task<IActionResult> Deleteflight(Guid id) //Deleting flight detail
         {
-            var p = await context.FlightDatas.FirstOrDefaultAsync(x => x.id == id);
-            if (p != null)
+            bool k = context1.Deletemethod(id);
+            if (k)
             {
-                context.FlightDatas.Remove(p);
-                await context.SaveChangesAsync();
                 return RedirectToAction("Flightlist");
             }
-            return View(p);
+            else
+            {
+                var p = context1.Getmethod(id);
+                var newmodel = new UpdateEmployeeViewModel()
+                {
+                    id = p.id,
+                    flightid = p.flightid,
+                    arrival_date = Convert.ToDateTime(p.arrival_date),
+                    arrival_destination = p.arrival_destination,
+                    departure_date = Convert.ToDateTime(p.departure_date),
+                    departure_destination = p.departure_destination
+
+                };
+                ViewBag.Message6 = "Can't Delete this";
+                return View(newmodel);
+            }
 
         }
 
      
-        public FileResult Export1()
+        public FileResult Export1() //Exporting csv 
         {
 
-            var p = context.FlightDatas.ToList();
-            string[] columns = new string[] { "Flight id", "Departure_Destination", "Arrival_Destination", "Departure_Date", "Arrival_Date" };
-            string csv = string.Empty;
-
-            foreach (var ps in columns)
-            {
-                csv += ps + ',';
-
-
-            }
-            csv += "\r\n";
-
-            foreach (var pd in p)
-            {
-                csv += pd.flightid.Replace(',', ';') + ',';
-                csv += pd.departure_destination.Replace(',', ';') + ',';
-                csv += pd.arrival_destination.Replace(',', ';') + ',';
-                csv += Convert.ToString(pd.departure_date).Replace(',', ';') + ',';
-                csv += pd.arrival_date.ToString().Replace(',', ';') + ",";
-                csv += "\r\n";
-
-            }
+            string csv = context.extractdata();
+            
             byte[] bytes = Encoding.ASCII.GetBytes(csv);
             return File(bytes, "text/csv", "Flights.csv");
 
