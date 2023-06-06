@@ -6,7 +6,7 @@ using Flights.Details;
 
 namespace Flights.Repository
 {
-    public interface ICsvMethods
+    public interface ICsvMethods  //interface for csv methods
     {
         bool IsCsv(string k);
         bool writecsvtosql(string k);
@@ -20,7 +20,7 @@ namespace Flights.Repository
         {
             this.context = context;
         }
-        public bool IsCsv(string k)
+        public bool IsCsv(string k)   //checking for csv
         {
             string[] p = k.Split('.');
             bool k1 = false;
@@ -35,7 +35,7 @@ namespace Flights.Repository
             return k1;
         }
 
-        public bool writecsvtosql(string fname)
+        public bool writecsvtosql(string fname) //writing to the sql
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Flights.Repository
 
         }
 
-        public string extractdata()
+        public string extractdata() //extracting data from the sql
         {
             var p = context.FlightDatas.ToList();
             string[] columns = new string[] { "flightid","departure_destination","departure_date","arrival_destination","arrival_Date" };

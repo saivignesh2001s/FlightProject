@@ -7,7 +7,7 @@ using Microsoft.Identity.Client;
 
 namespace Flights.Repository
 {
-    public interface IMethods
+    public interface IMethods //CRUD operations to Database
     {
         bool Addmethod(FlightData p);
         bool Updatemethod(UpdateEmployeeViewModel p);
@@ -22,7 +22,7 @@ namespace Flights.Repository
         {
             this.context=_context;
         }
-        public bool Addmethod(FlightData p)
+        public bool Addmethod(FlightData p)  //Add method
         {
             try
             {
@@ -36,25 +36,25 @@ namespace Flights.Repository
             }
         }
 
-        public bool Deletemethod(Guid id)
+        public bool Deletemethod(Guid id) //Delete method
         {
             var p=context.FlightDatas.FirstOrDefault(x => x.id == id);
             if (p != null)
             {
                 context.FlightDatas.Remove(p);
-                context.SaveChangesAsync();
+                context.SaveChanges();
                 return true;
               
             }
             return false;
         }
 
-        public List<FlightData> GetAllmethod()
+        public List<FlightData> GetAllmethod() //Get all data from sql
         {
             return context.FlightDatas.ToList();
         }
 
-        public FlightData Getmethod(Guid id)
+        public FlightData Getmethod(Guid id) //Get data for the id
         {
             var m=context.FlightDatas.FirstOrDefault(x => x.id == id);
             if (m!=null)
@@ -74,7 +74,7 @@ namespace Flights.Repository
             }
         }
 
-        public bool Updatemethod(UpdateEmployeeViewModel p)
+        public bool Updatemethod(UpdateEmployeeViewModel p) //method for editing
         {
             var k= context.FlightDatas.FirstOrDefault(x => x.id == p.id);
             if (k!=null)
