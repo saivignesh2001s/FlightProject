@@ -13,6 +13,7 @@ using Grpc.Core;
 using CsvHelper;
 using System.Globalization;
 using Flights.Repository;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Flights.Controllers
 {
@@ -80,33 +81,48 @@ namespace Flights.Controllers
 
         public async Task<IActionResult> AddFlight(IFormCollection c)
         {
+           
 
-            var fdata = new FlightData()
-            {
-                id = Guid.NewGuid(),
-                flightid = c["flightid"].ToString(),
-                departure_destination = c["departure_destination"].ToString(),
-                arrival_destination = c["arrival_destination"].ToString(),
-                arrival_date = Convert.ToDateTime(c["arrival_date"]),
-                departure_date = Convert.ToDateTime(c["departure_date"])
-            };
-            bool k1 = context1.Addmethod(fdata);
-            if(k1)
-            {
+                var fdata = new FlightData()
+                {
+                    id = Guid.NewGuid(),
+                    flightid = c["flightid"].ToString(),
+                    departure_destination = c["departure_destination"].ToString(),
+                    arrival_date = Convert.ToDateTime(c["arrival_date"]),
+                    arrival_destination = c["arrival_destination"].ToString(),
+                    departure_date = Convert.ToDateTime(c["departure_date"])
+
+
+                };
+
+                if (fdata.departure_date < fdata.arrival_date)
+                {
+                    bool k1 = context1.Addmethod(fdata);
+                    if (k1)
+                    {
+
+
+                        return RedirectToAction("Flightlist");
+                    }
+                    else
+                    {
+                        ViewBag.Message2 = "Verify whether valid datas given";
+                        AddFlightModel pk = context1.AddFlightModel(fdata);
+                        return View(pk);
+                    }
+                }
+                else
+                {
+                    ViewBag.Message3 = "Departure datetime cannot be greater than arrival date time";
+                    AddFlightModel pk = context1.AddFlightModel(fdata);
+                    return View(pk);
+                }
+
+            }
             
-                ViewBag.Message1 = "Saved successfully";
-                return RedirectToAction("Flightlist");
-            }
-            else
-            {
-                ViewBag.Message2 = "Check connections again";
-                return View(fdata);
-            }
 
 
-
-
-        }
+        
         public async Task<IActionResult> Viewflight(Guid id) //context for Editing flight details
         {
             var p = context1.Getmethod(id);

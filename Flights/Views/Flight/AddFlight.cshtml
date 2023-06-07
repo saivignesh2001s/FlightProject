@@ -5,7 +5,7 @@
     
     <div class="form-group">
         <label for=""> Flightid</label>
-        <input type="text" class="form-control" asp-for="flightid"  aria-describedby="emailHelp" placeholder="Enter Flightid">
+        <input type="text" class="form-control" asp-for="flightid"   placeholder="Enter Flightid" required>
         
     </div>
     <div class="form-group">
@@ -18,18 +18,18 @@
     </div>
     <div class="form-group">
         <label for="">Departure Date</label>
-        <input type="datetime" class="form-control" asp-for="departure_date" placeholder="Enter departure date">
+        <input type="datetime" class="form-control" asp-for="departure_date" placeholder="Enter departure date" required>
     </div>
     <div class="form-group">
         <label for="">Arrival Date</label>
-        <input type="datetime" class="form-control" asp-for="arrival_date" placeholder="Enter Arrival date">
+        <input type="datetime" class="form-control" asp-for="arrival_date" placeholder="Enter Arrival date" required>
     </div>
 
 
     <button type="submit" class="btn btn-primary">Add flight</button>
     
-    <p style="color:green">@ViewBag.Message1</p>
     <p style="color:red">@ViewBag.Message2</p>
+     <p style="color:red">@ViewBag.Message3</p>
     
     
  </form>

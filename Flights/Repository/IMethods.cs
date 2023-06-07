@@ -14,6 +14,8 @@ namespace Flights.Repository
         bool Deletemethod(Guid id);
         List<FlightData> GetAllmethod();
         FlightData Getmethod(Guid id);
+
+        AddFlightModel AddFlightModel(FlightData p);
     }
     public class crudmethods : IMethods
     {
@@ -93,5 +95,19 @@ namespace Flights.Repository
                 return false;
             }
         }
+        public AddFlightModel AddFlightModel(FlightData p)//method for finding add flight model
+        {
+            var k = new AddFlightModel()
+            {
+                flightid = p.flightid.ToString(),
+                departure_destination = p.departure_destination.ToString(),
+                arrival_date = Convert.ToDateTime(p.arrival_date),
+                arrival_destination = p.arrival_destination.ToString(),
+                departure_date = Convert.ToDateTime(p.departure_date)
+            };
+            return k;
+        }
+
+      
     }
 }

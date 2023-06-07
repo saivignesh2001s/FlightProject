@@ -81,14 +81,18 @@ namespace Flights.Repository
             int i = 0;
             foreach (var ps in columns)
             {
-                if(i<ps.Length-1)
-                csv += ps + ',';
+                if (i < columns.Length-1)
+                {
+
+                    csv += ps + ',';
+                    i++;
+                }
                 else
-                    csv += "\r\n";
+                    csv += ps+"\r\n";
 
 
             }
-            csv += "\r\n";
+            
 
             foreach (var pd in p)
             {
