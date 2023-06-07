@@ -79,18 +79,18 @@ namespace Flights.Controllers
         }
         [HttpPost]
 
-        public async Task<IActionResult> AddFlight(IFormCollection c)
+        public async Task<IActionResult> AddFlight(AddFlightModel c)
         {
-           
-
+            try
+            {
                 var fdata = new FlightData()
                 {
                     id = Guid.NewGuid(),
-                    flightid = c["flightid"].ToString(),
-                    departure_destination = c["departure_destination"].ToString(),
-                    arrival_date = Convert.ToDateTime(c["arrival_date"]),
-                    arrival_destination = c["arrival_destination"].ToString(),
-                    departure_date = Convert.ToDateTime(c["departure_date"])
+                    flightid = c.flightid.ToString(),
+                    departure_destination = c.departure_destination.ToString(),
+                    arrival_date = Convert.ToDateTime(c.arrival_date),
+                    arrival_destination = c.arrival_destination.ToString(),
+                    departure_date = Convert.ToDateTime(c.departure_date)
 
 
                 };
@@ -106,17 +106,22 @@ namespace Flights.Controllers
                     }
                     else
                     {
-                        ViewBag.Message2 = "Verify whether valid datas given";
-                        AddFlightModel pk = context1.AddFlightModel(fdata);
-                        return View(pk);
+                        ViewBag.Message2 = "Check data and sql given";
+                        return View(c);
                     }
                 }
                 else
                 {
                     ViewBag.Message3 = "Departure datetime cannot be greater than arrival date time";
-                    AddFlightModel pk = context1.AddFlightModel(fdata);
-                    return View(pk);
+
+                    return View(c);
                 }
+            }
+            catch
+            {
+                ViewBag.Message1 = "Check the formats of the data  given";
+                return View(c);
+            }
 
             }
             
