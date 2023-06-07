@@ -1,0 +1,48 @@
+﻿body {
+    background-image: url("airlinebackground7.png");
+    background-repeat: no-repeat;
+    background-position: 70%;
+    background-size: cover;
+}
+
+.class1 {
+    font-family: 'Gill Sans','Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    color: rgb(54,14, 223);
+    font-size: large;
+}
+
+.container {
+    margin-top: 2.5%;
+}
+
+.class3 {
+    text-align: left;
+    color: rgb(238, 116, 126);
+}
+
+.grid-container {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-row-gap: 25px;
+    grid-column-gap: 75px;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 0px solid rgba(0, 0, 0, 0.8);
+    padding: 500px;
+    text-align: center;
+}
+
+.btn1 {
+    margin-right: 100px;
+}
+
+.contain > .btn:not(:last-child) {
+    margin-right: 100px;
+}
+
+.btn12 {
+    margin-left: 220px;
+}

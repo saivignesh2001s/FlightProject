@@ -1,36 +1,54 @@
 ﻿@model Flights.Models.AddFlightModel
 @{
+  
 }
-<form method="post" action="AddFlight">
-    
-    <div class="form-group">
-        <label for=""> Flightid</label>
-        <input type="text" class="form-control" asp-for="flightid"   placeholder="Enter Flightid" required>
-        
-    </div>
-    <div class="form-group">
-        <label for="">Depature Destination</label>
-        <input type="text" class="form-control" asp-for="departure_destination" placeholder="Enter Depature destination">
-    </div>
-    <div class="form-group">
-        <label for="">Arrival Destination</label>
-        <input type="text" class="form-control" asp-for="arrival_destination" placeholder="Enter Arrival destination">
-    </div>
-    <div class="form-group">
-        <label for="">Departure Date</label>
-        <input type="datetime" class="form-control" asp-for="departure_date" placeholder="Enter departure date" required>
-    </div>
-    <div class="form-group">
-        <label for="">Arrival Date</label>
-        <input type="datetime" class="form-control" asp-for="arrival_date" placeholder="Enter Arrival date" required>
-    </div>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="~/css/Externalstyles.css" asp-append-version="true" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-0"> </div>
+        <div class="col-md-0">
+            <h2 class="class3">ADD FLIGHT DETAILS</h2>
+            <form method="post" action="AddFlight">
 
 
-    <button type="submit" class="btn btn-primary">Add flight</button>
-      <p style="color:red">@ViewBag.Message1</p>
-    <p style="color:red">@ViewBag.Message2</p>
-     <p style="color:red">@ViewBag.Message3</p>
-    
-    
- </form>
+                <div class="form-group">
+                    <label for="" class="class1"> Flight Id</label>
+                    <input type="text" style="width:590px;" class="form-control" asp-for="flightid" placeholder="Enter Flight Id" required>
 
+                </div>
+                <div class="grid-container">
+                    <div class="form-group" class="grid-item">
+                        <label for="" class="class1">Departure Destination</label>
+                        <input type="text" style="width:250px;" class="form-control" asp-for="departure_destination" placeholder="Enter Depature destination">
+                    </div>
+                    <div class="form-group" class="grid-item">
+                        <label for="" class="class1">Departure Date</label>
+                        <input type="datetime" style="width:250px;" class="form-control" asp-for="departure_date" placeholder="Enter departure date" required>
+                    </div>
+                    <div class="form-group" class="grid-item">
+                        <label for="" class="class1">Arrival Destination</label>
+                        <input type="text" style="width:250px;" class="form-control" asp-for="arrival_destination" placeholder="Enter Arrival destination">
+                    </div>
+
+                    <div class="form-group" class="grid-item">
+                        <label for="" class="class1">Arrival Date</label>
+                        <input type="datetime" style="width:250px;" class="form-control" asp-for="arrival_date" placeholder="Enter Arrival date" required>
+                    </div>
+
+                </div>
+                <br>
+                <button style="border-radius: 30px; border: none; padding: 15px 20px; background-color:#92508f; color: white;margin-top:30px;" type="submit" class="btn12">Add Flight</button>
+
+                <p style="color:red">@ViewBag.Message1</p>
+                <p style="color:red">@ViewBag.Message2</p>
+                <p style="color:red">@ViewBag.Message3</p>
+                </form>
+                </body>
+            
+            </html>

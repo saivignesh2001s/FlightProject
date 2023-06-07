@@ -2,10 +2,10 @@
 @{
 
 }
-
-<h1>List of flight details </h1>
+<body style="background-color:deepskyblue">
+    <h2 style=" color: rgb(238, 116, 126);">List of flight details </h2>
 <div style="float:right;">
-@Html.ActionLink("Export as csv","Export1")
+   <p> @Html.ActionLink("Export as csv","Export1",null,new {@class="btn btn-success"})</p>
 </div>
 <table class="table table-striped">
     <thead>
@@ -25,10 +25,11 @@
                 <td>@Html.DisplayFor(modelItem=>f.arrival_destination)</td>
                 <td>@Html.DisplayFor(modelItem=>f.departure_date)</td>
                 <td>@Html.DisplayFor(modelItem=>f.arrival_date)</td>
-                <td>@Html.ActionLink("View","Viewflight",new{id=f.id})</td>
+                <td>@Html.ActionLink("View","Viewflight",new{id=f.id},new { @class="btn btn-danger"})</td>
                
           
         </tr>
         }
     </tbody>
 </table>
+</body>
