@@ -2,12 +2,20 @@
 @{
 
 }
+<style>
+.contain >.btn:not(:last-child){
+    margin-right: 350px;
+}
+</style>
+
 <body style="background-color:deepskyblue">
     <h2 style=" color: rgb(238, 116, 126);">List of flight details </h2>
-<div>
-        @Html.ActionLink("Import data","Upload","Flight",null,new {@class="btn btn-success"})
-        @Html.ActionLink("Add Flight","AddFlight","Flight",null,new {@class="btn btn-primary"})
-        @Html.ActionLink("Export as csv","Export1","Flight",null,new {@class="btn btn-warning"})
+<div class="contain">
+        <div class="btn">@Html.ActionLink("Import data","Upload","Flight",null,new {@class="btn btn-success"})</div>
+        <div class="btn">@Html.ActionLink("Add Flight","AddFlight","Flight",null,new {@class="btn btn-primary"})</div>
+        <div class="btn">
+            @Html.ActionLink("Export as csv","Export1","Flight",null,new {@class="btn btn-warning"})
+        </div>
 
 </div>
 <table class="table table-striped">

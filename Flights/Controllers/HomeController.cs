@@ -14,9 +14,34 @@ namespace Flights.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Login(Login p)
+        {
+            if(p.username.ToString()=="admin@gmail.com" && p.password.ToString()=="Admin@123")
+            {
+                return RedirectToAction("Flightlist","Flight");
+            }
+            else if(p.username.ToString() == "admin@gmail.com" && p.password.ToString() != "Admin@123")
+            {
+                ViewBag.Message1 = "Check the password";
+                return View();
+            }
+            else if(p.username.ToString() != "admin@gmail.com" && p.password.ToString() == "Admin@123")
+            {
+
+                ViewBag.Message2 = "Check the username";
+                return View();
+
+            }
+            else
+            {
+                ViewBag.Message3 = "Enter the correct email id and password";
+                return View();
+            }
         }
 
         public IActionResult Privacy()

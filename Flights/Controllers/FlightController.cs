@@ -32,40 +32,50 @@ namespace Flights.Controllers
 
             return View();
         }
+       
         [HttpPost]
-        public async Task<IActionResult> Upload(IFormCollection c){
-            string k =c["filename"].ToString();
-           
-           
-
-            if (context.IsCsv(k))
+        public async Task<IActionResult> Upload(IFormFile file)
             {
-               
-                  
-                    string fname = @"D://Downloads//" + k;
+            if (file.FileName!= null)
+            {
+
+                string k = file.FileName;
+
+
+
+                if (context.IsCsv(k))
+                {
+
+
+                    string fname = Path.GetFileName(file.FileName);
+
                     bool k1 = context.writecsvtosql(fname);
-                if (k1) {   
-                  
-                    return RedirectToAction("Flightlist");
+                    if (k1)
+                    {
+
+                        return RedirectToAction("Flightlist");
+                    }
+                    else
+                    {
+                        ViewBag.Message1 = "Check Data,Sql connection and file name again";
+                        return View();
+                    }
+
                 }
                 else
                 {
-                    ViewBag.Message1 = "Check Data,Sql connection and file name again";
+                    ViewBag.Message2 = "Select csv files only";
                     return View();
                 }
 
             }
             else
             {
-                ViewBag.Message2 = "Select csv files only";
+                ViewBag.Message3 = "Select file";
                 return View();
             }
-          
-           
-        
-        
-        
-        }
+
+            }
         public async Task<IActionResult> Flightlist() //Function for listing flight details
         {
             var Details = context1.GetAllmethod();
@@ -81,21 +91,19 @@ namespace Flights.Controllers
 
         public async Task<IActionResult> AddFlight(AddFlightModel c)
         {
-            try
+            try { 
+            var fdata = new FlightData()
             {
-                var fdata = new FlightData()
-                {
-                    id = Guid.NewGuid(),
-                    flightid = c.flightid.ToString(),
-                    departure_destination = c.departure_destination.ToString(),
-                    arrival_date = Convert.ToDateTime(c.arrival_date),
-                    arrival_destination = c.arrival_destination.ToString(),
-                    departure_date = Convert.ToDateTime(c.departure_date)
+                id =new Guid(),
+                flightid = c.flightid,
+                arrival_date = Convert.ToDateTime(c.arrival_date),
+                arrival_destination = c.arrival_destination,
+                departure_date = Convert.ToDateTime(c.departure_date),
+                departure_destination = c.departure_destination
 
+            };
 
-                };
-
-                if (fdata.departure_date < fdata.arrival_date)
+            if (fdata.departure_date <= fdata.arrival_date)
                 {
                     bool k1 = context1.Addmethod(fdata);
                     if (k1)

@@ -1,0 +1,41 @@
+﻿@model Flights.Models.Login
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page with Background Image Example</title>
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true">
+
+</head>
+<header>
+    <marquee style="color:blueviolet"><h1>Welcome to Black Knights Airlines</h1></marquee>
+</header>
+<body>
+    <div id="bg">
+        <!-- partial:index.partial.html -->
+        <form method="post" asp-action="Login" asp-controller="Home">
+            <div class="form-field">
+                <input type="email" placeholder="Email / Username" asp-for="username" required />
+            </div>
+
+            <div class="form-field">
+                <input type="password" asp-for="password" placeholder="Password" required />
+            </div>
+
+            <div class="form-field">
+                <button class="btn" type="submit">Log in</button>
+            </div>
+            <p style="color:red">@ViewBag.Message1</p>
+               <p style="color:red">@ViewBag.Message2</p>
+            <p style="color:red">@ViewBag.Message3</p>
+        </form>
+    </div>
+
+    <!-- partial -->
+
+</body>
+<footer>
+</footer>
+</html>

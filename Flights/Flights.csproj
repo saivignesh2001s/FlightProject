@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\airlinebackground7.png" />
     <None Include="wwwroot\css\Externalstyles.css" />
   </ItemGroup>
 
@@ -24,6 +23,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Uploaded files\" />
   </ItemGroup>
 
 </Project>
