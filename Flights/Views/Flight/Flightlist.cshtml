@@ -4,8 +4,11 @@
 }
 <body style="background-color:deepskyblue">
     <h2 style=" color: rgb(238, 116, 126);">List of flight details </h2>
-<div style="float:right;">
-   <p> @Html.ActionLink("Export as csv","Export1",null,new {@class="btn btn-success"})</p>
+<div>
+        @Html.ActionLink("Import data","Upload","Flight",null,new {@class="btn btn-success"})
+        @Html.ActionLink("Add Flight","AddFlight","Flight",null,new {@class="btn btn-primary"})
+        @Html.ActionLink("Export as csv","Export1","Flight",null,new {@class="btn btn-warning"})
+
 </div>
 <table class="table table-striped">
     <thead>
