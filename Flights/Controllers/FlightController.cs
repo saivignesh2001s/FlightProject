@@ -21,10 +21,12 @@ namespace Flights.Controllers
     {
         private readonly IMethods context1;
         private readonly ICsvMethods context;
-        public FlightController(ICsvMethods context,IMethods context1) //Importing Two methods from Repository folder
+        private IWebHostEnvironment Environment;
+        public FlightController(ICsvMethods context,IMethods context1, IWebHostEnvironment Environment) //Importing Two methods from Repository folder
         {
             this.context = context;
             this.context1=context1;
+            this.Environment = Environment;
         }
 
 
@@ -48,8 +50,14 @@ namespace Flights.Controllers
 
 
                     string fname = Path.GetFileName(file.FileName);
+                    string root = Path.Combine(this.Environment.WebRootPath,"Uploads");
+                    string path = Path.Combine(root,fname);
+                    using(var fs=new FileStream(path, FileMode.Create))
+                    {
+                        file.CopyTo(fs);
+                    }
 
-                    bool k1 = context.writecsvtosql(fname);
+                    bool k1 = context.writecsvtosql(path);
                     if (k1)
                     {
 

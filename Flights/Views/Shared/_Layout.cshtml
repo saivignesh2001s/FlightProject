@@ -21,7 +21,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="margin-right:100px">
                     <ul class="navbar-nav flex-grow-1">
                      <!--   <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Flight" asp-action="Upload">Upload csv</a>
@@ -32,6 +32,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Flight" asp-action="Flightlist">Flightlist</a>
                         </li>-->
+                        @if (Context.Session.GetString("currentUser")!= null)
+                        {
+                          
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login" class="btn btn-danger">Logout</a>
+                            </li>
+                            
+                            <script type="text/javascript">
+                                function preventBack() { window.history.forward(); }
+                                setTimeout("preventBack()", 0);
+                                window.onunload = function () { null };
+                            </script>
+                        }
                         
                     </ul>
                 </div>

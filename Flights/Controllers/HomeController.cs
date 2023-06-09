@@ -23,6 +23,7 @@ namespace Flights.Controllers
         {
             if(p.username.ToString()=="admin@gmail.com" && p.password.ToString()=="Admin@123")
             {
+                HttpContext.Session.SetString("currentUser",p.username);
                 return RedirectToAction("Flightlist","Flight");
             }
             else if(p.username.ToString() == "admin@gmail.com" && p.password.ToString() != "Admin@123")
